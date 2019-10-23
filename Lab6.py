@@ -26,7 +26,6 @@ class UserPair():
     def receive(self):
         d = deepcopy(self.cdma.channel)
         self.decode(d)
-        pass
 
 
 class CDMA():
@@ -69,7 +68,6 @@ class CDMA():
 
     def signalCombine(self, data):
         self.channel = self.channel + data
-        pass
 
 
 if __name__ == "__main__":
