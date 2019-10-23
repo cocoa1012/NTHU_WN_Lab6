@@ -5,7 +5,7 @@ from copy import deepcopy
 class UserPair():
     def __init__(self, uId, code, cdma):
         self.uId = uId
-        self.code = code
+        self.code = np.reshape(code, (1, -1))
         self.cdma = cdma
 
     def send(self, data):
@@ -14,11 +14,11 @@ class UserPair():
         self.cdma.signalCombine(d)
 
     def encode(self, data):
-        return np.dot(data, np.reshape(self.cdma.Walsh[self.uId], (1, -1)))
+        return np.dot(data, self.code)
 
     def decode(self, data):
         for i, d in enumerate(data):
-            data[i] = data[i] * np.reshape(self.cdma.Walsh[self.uId], (1, -1))
+            data[i] = data[i] * self.code
         d = np.reshape(np.sum(data, axis=1)/8, (1, -1)).astype(int)
         print("Receiver_%s, receive: %s" % (self.uId, d))
         return d
